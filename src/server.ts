@@ -7,6 +7,9 @@ import compression from 'compression';
 import config from '@/config';
 import limiter from '@/lib/express_rate_limit'; // rate limiting middleware
 
+// Router
+import v1Routes from '@/routes/v1/index';
+
 import type { CorsOptions } from 'cors';
 
 const app = express();
@@ -48,11 +51,7 @@ app.use(limiter);
 
 (async() => {
     try {
-        app.get('/', (req, res) => {
-            res.json({
-                message: 'Hello, World!'
-            });
-        });
+        app.use('/api/v1', v1Routes);
 
         app.listen(config.PORT, () => {
             console.log(`Server is running on http://localhost:${config.PORT}`);
@@ -64,3 +63,18 @@ app.use(limiter);
         }
     }
 })();
+
+// handle shutdown gracefully
+const handleServerShutdown = async () => {
+    try {
+        console.log('Server SHUTDOWN...');
+        process.exit(0); // exit the process gracefully
+    } catch (error) {
+        console.log('Error during server shutdown:', error);
+    }
+};
+
+// listen for termination signals to handle graceful shutdown
+// 'SIGINT' for Ctrl+C, 'SIGTERM' for termination signal
+process.on('SIGINT', handleServerShutdown);
+process.on('SIGTERM', handleServerShutdown);
