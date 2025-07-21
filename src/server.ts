@@ -6,6 +6,7 @@ import compression from 'compression';
 
 import config from '@/config';
 import limiter from '@/lib/express_rate_limit'; // rate limiting middleware
+import { connectToDatabase, disconnectFromDatabase } from '@/lib/mongoose';
 
 // Router
 import v1Routes from '@/routes/v1/index';
@@ -51,6 +52,8 @@ app.use(limiter);
 
 (async() => {
     try {
+        await connectToDatabase();
+
         app.use('/api/v1', v1Routes);
 
         app.listen(config.PORT, () => {
@@ -67,6 +70,8 @@ app.use(limiter);
 // handle shutdown gracefully
 const handleServerShutdown = async () => {
     try {
+        await disconnectFromDatabase();
+
         console.log('Server SHUTDOWN...');
         process.exit(0); // exit the process gracefully
     } catch (error) {

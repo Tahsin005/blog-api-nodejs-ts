@@ -8,6 +8,7 @@ const config = {
     WHITELIST_ORIGINS: [
         'http://blog-api-nodejs-ts.onrender.com',
     ],
+    MONGO_URI: process.env.MONGO_URI,
 };
 
 export default config;
