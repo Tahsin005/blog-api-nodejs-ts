@@ -9,6 +9,7 @@ const config = {
         'http://blog-api-nodejs-ts.onrender.com',
     ],
     MONGO_URI: process.env.MONGO_URI,
+    LOG_LEVEL: process.env.LOG_LEVEL || 'info',
 };
 
 export default config;
