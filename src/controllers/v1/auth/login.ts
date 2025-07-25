@@ -44,7 +44,7 @@ const login = async (req: Request, res: Response): Promise<void> => {
         res.cookie('refresh_token', refreshToken, {
             httpOnly: true,
             secure: config.NODE_ENV === 'production',
-            sameSite: 'none',
+            sameSite: 'strict',
         });
 
         res.status(201).json({
