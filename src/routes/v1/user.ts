@@ -9,6 +9,7 @@ import User from "@/models/user";
 
 import getCurrentUser from "@/controllers/v1/user/get_current_user";
 import updateCurrentUser from "@/controllers/v1/user/update_current_user";
+import deleteCurrentUser from "@/controllers/v1/user/delete_current_user";
 
 const router = Router();
 
@@ -70,4 +71,10 @@ router.put(
     updateCurrentUser
 );
 
+router.delete(
+    '/current',
+    authenticate,
+    authorize(['user', 'admin']),
+    deleteCurrentUser
+);
 export default router;
