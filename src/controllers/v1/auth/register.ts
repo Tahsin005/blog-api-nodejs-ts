@@ -8,7 +8,6 @@ import Token from "@/models/token";
 
 import type { Request, Response } from "express";
 import type { IUser } from "@/models/user";
-import { log } from "console";
 
 
 type UserData = Pick<IUser, 'email' | 'password' | 'role'>
