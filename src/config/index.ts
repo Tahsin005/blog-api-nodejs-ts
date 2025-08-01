@@ -13,6 +13,7 @@ const config = {
     WHITELISTED_ADMIN_MAIL : [
         'tahsin.ferdous3546@gmail.com',
         'codewithtahsin@gmail.com',
+        'mtfferdous35@gmail.com',
     ],
     MONGO_URI: process.env.MONGO_URI,
     LOG_LEVEL: process.env.LOG_LEVEL || 'info',
@@ -20,6 +21,8 @@ const config = {
     JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET!,
     ACCESS_TOKEN_EXPIRY: process.env.ACCESS_TOKEN_EXPIRY  as ms.StringValue,
     REFRESH_TOKEN_EXPIRY: process.env.REFRESH_TOKEN_EXPIRY as ms.StringValue,
+    defaultResLimit: 20,
+    defaultResOffset: 0,
 };
 
 export default config;

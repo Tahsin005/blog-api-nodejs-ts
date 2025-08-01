@@ -10,6 +10,7 @@ import User from "@/models/user";
 import getCurrentUser from "@/controllers/v1/user/get_current_user";
 import updateCurrentUser from "@/controllers/v1/user/update_current_user";
 import deleteCurrentUser from "@/controllers/v1/user/delete_current_user";
+import getAllUsers from "@/controllers/v1/user/get_all_users";
 
 const router = Router();
 
@@ -77,4 +78,21 @@ router.delete(
     authorize(['user', 'admin']),
     deleteCurrentUser
 );
+
+router.get(
+    '/all',
+    authenticate,
+    authorize(['admin']),
+    query('limit')
+        .optional()
+        .isInt({ min: 1, max: 50 })
+        .withMessage('Limit must be an integer between 1 and 50'),
+    query('offset')
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage('Offset must be a non-negative integer'),
+    validationError,
+    getAllUsers
+);
+
 export default router;
