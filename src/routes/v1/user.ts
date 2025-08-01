@@ -11,6 +11,7 @@ import getCurrentUser from "@/controllers/v1/user/get_current_user";
 import updateCurrentUser from "@/controllers/v1/user/update_current_user";
 import deleteCurrentUser from "@/controllers/v1/user/delete_current_user";
 import getAllUsers from "@/controllers/v1/user/get_all_users";
+import getUser from "@/controllers/v1/user/get_user";
 
 const router = Router();
 
@@ -80,7 +81,7 @@ router.delete(
 );
 
 router.get(
-    '/all',
+    '',
     authenticate,
     authorize(['admin']),
     query('limit')
@@ -93,6 +94,18 @@ router.get(
         .withMessage('Offset must be a non-negative integer'),
     validationError,
     getAllUsers
+);
+
+router.get(
+    '/:userId',
+    authenticate,
+    authorize(['admin']),
+    param('userId')
+        .notEmpty()
+        .isMongoId()
+        .withMessage('Invalid user ID'),
+    validationError,
+    getUser,
 );
 
 export default router;
