@@ -18,6 +18,21 @@ router.post(
     authenticate,
     authorize(['admin']),
     upload.single('banner_image'),
+    body('title')
+        .trim()
+        .notEmpty()
+        .withMessage('Title is required')
+        .isLength({ max: 180 })
+        .withMessage('Title must be less than 180 characters'),
+    body('content')
+        .trim()
+        .notEmpty()
+        .withMessage('Content is required'),
+    body('status')
+        .optional()
+        .isIn(['draft', 'published'])
+        .withMessage('Status must be either draft or published'),
+    validationError,
     uploadBlogBanner('post'),
     createBlog
 );

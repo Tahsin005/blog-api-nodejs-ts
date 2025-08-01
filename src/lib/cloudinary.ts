@@ -12,7 +12,7 @@ cloudinary.config({
     secure: config.NODE_ENV === 'production',
 });
 
-const uploadToCloudinary = (buffer: Buffer<ArrayBufferLike>, publicId: string): Promise<UploadApiResponse | undefined> => {
+const uploadToCloudinary = (buffer: Buffer<ArrayBufferLike>, publicId: string | any): Promise<UploadApiResponse | undefined> => {
     return new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream({
             allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
