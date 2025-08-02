@@ -10,6 +10,7 @@ import uploadBlogBanner from "@/middlewares/uploadBlogBanner";
 import createBlog from "@/controllers/v1/blog/create_blog";
 import getAllBlogs from "@/controllers/v1/blog/get_all_blogs";
 import getBlogsByUser from "@/controllers/v1/blog/get_blogs_by_user";
+import getBlogsBySlug from "@/controllers/v1/blog/get_blog_by_slug";
 
 const upload = multer();
 
@@ -72,6 +73,17 @@ router.get(
         .withMessage('Offset must be a non-negative integer'),
     validationError,
     getBlogsByUser,
+);
+
+router.get(
+    '/:slug',
+    authenticate,
+    authorize(['admin', 'user']),
+    param('slug')
+        .isSlug()
+        .withMessage('Slug is required'),
+    validationError,
+    getBlogsBySlug,
 );
 
 export default router;
