@@ -10,7 +10,7 @@ import uploadBlogBanner from "@/middlewares/uploadBlogBanner";
 import createBlog from "@/controllers/v1/blog/create_blog";
 import getAllBlogs from "@/controllers/v1/blog/get_all_blogs";
 import getBlogsByUser from "@/controllers/v1/blog/get_blogs_by_user";
-import getBlogsBySlug from "@/controllers/v1/blog/get_blog_by_slug";
+import getBlogBySlug from "@/controllers/v1/blog/get_blog_by_slug";
 
 const upload = multer();
 
@@ -83,7 +83,7 @@ router.get(
         .isSlug()
         .withMessage('Slug is required'),
     validationError,
-    getBlogsBySlug,
+    getBlogBySlug,
 );
 
 export default router;
