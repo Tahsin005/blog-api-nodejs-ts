@@ -3,6 +3,7 @@ import { body, param } from "express-validator";
 
 // controllers
 import likeBlog from "@/controllers/v1/like/like_blog";
+import unlikeBlog from "@/controllers/v1/like/unlike_blog";
 
 // middlewares
 import validationError from "@/middlewares/validationError";
@@ -30,6 +31,22 @@ router.post(
         .withMessage('Invalid user ID'),
     validationError,
     likeBlog,
+);
+
+router.delete(
+    '/blog/:blogId',
+    authenticate,
+    authorize(['admin', 'user']),
+    param('blogId')
+        .isMongoId()
+        .withMessage('Invalid blog ID'),
+    body('userId')
+        .notEmpty()
+        .withMessage('User ID is required')
+        .isMongoId()
+        .withMessage('Invalid user ID'),
+    validationError,
+    unlikeBlog,
 );
 
 export default router;
