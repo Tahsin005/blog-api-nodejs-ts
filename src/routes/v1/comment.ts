@@ -3,6 +3,7 @@ import { body, param } from "express-validator";
 
 // controllers
 import commentBlog from "@/controllers/v1/comment/comment_blog";
+import getCommentsBySlug from "@/controllers/v1/comment/get_comments_by_blog";
 
 // middlewares
 import validationError from "@/middlewares/validationError";
@@ -29,6 +30,17 @@ router.post(
         .withMessage('Content is required'),
     validationError,
     commentBlog,
+);
+
+router.get(
+    '/blog/:blogId',
+    authenticate,
+    authorize(['admin', 'user']),
+    param('blogId')
+        .isMongoId()
+        .withMessage('Invalid blog ID'),
+    validationError,
+    getCommentsBySlug,
 );
 
 export default router;
